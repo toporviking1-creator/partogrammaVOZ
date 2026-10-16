@@ -20,7 +20,7 @@ export const PARAMS = {
   sys:     { label: 'Систолическое АД', kind: 'num', min: 50, max: 260, presets: range(80, 170, 5), alert: v => v < 80 || v >= 140, thr: '<80, ≥140' },
   dia:     { label: 'Диастолическое АД', kind: 'num', min: 20, max: 170, presets: range(50, 110, 5), alert: v => v >= 90, thr: '≥90' },
   temp:    { label: 'Температура °С', kind: 'num', min: 33, max: 42, presets: range(35.8, 38.6, 0.1), alert: v => v < 35 || v >= 37.5, thr: '<35,0, ≥37,5' },
-  urine:   { label: 'Моча', kind: 'enum', opts: [['N', 'норма'], ['Б+', 'белок +'], ['Б++', 'белок ++'], ['К', 'К'], ['Ан', 'Ан']], alert: v => v === 'К' || v === 'Ан' || v === 'Б++', thr: 'К, Ан' },
+  urine:   { label: 'Моча, мл', kind: 'num', min: 0, max: 2000, presets: [50, 100, 150, 200, 250, 300, 350, 400, 500, 600], thr: 'К, Ан' },
   cfreq:   { label: 'Частота схваток в течение 10 мин', kind: 'num', min: 0, max: 10, presets: range(0, 7, 1), alert: v => v <= 2 || v > 5, thr: '≤2, >5' },
   cdur:    { label: 'Продолжительность схваток', kind: 'num', min: 0, max: 180, presets: range(15, 90, 5), alert: v => v < 20 || v > 60, thr: '<20, >60' },
   dil:     { label: 'Раскрытие шейки матки [График X]', kind: 'grid', grid: [10, 9, 8, 7, 6, 5], gridThr: { 9: '≥2ч', 8: '≥2.5ч', 7: '≥3ч', 6: '≥5ч', 5: '≥6ч' } },
