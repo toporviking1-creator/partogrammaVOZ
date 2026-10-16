@@ -1,66 +1,62 @@
-// Структура бланка WHO Labour Care Guide и пороги ALERT.
+// Строки бланка «Партограмма ВОЗ» отделения и пороги (колонка «Критические показатели»).
 
 const PLUS = [['0', '0'], ['+', '+'], ['++', '++'], ['+++', '+++']];
-const URINE = [['0', '0'], ['±', '±'], ['+', '+'], ['++', '++'], ['+++', '+++']];
-const YN = [['Y', 'Да'], ['N', 'Нет']];
+const YN = [['Да', 'Да'], ['Нет', 'Нет']];
 const range = (a, b, s) => { const r = []; for (let x = a; x <= b + 1e-9; x += s) r.push(Math.round(x * 10) / 10); return r; };
 
-// kind: num | enum | text | grid
+// kind: num | enum | text | grid | mark
 export const PARAMS = {
-  comp:  { label: 'Партнёр', kind: 'enum', opts: YN, alert: v => v === 'N', thr: 'N' },
-  pain:  { label: 'Обезболивание', kind: 'enum', opts: YN, alert: v => v === 'N', thr: 'N' },
-  fluid: { label: 'Питьё', kind: 'enum', opts: YN, alert: v => v === 'N', thr: 'N' },
-  posture: { label: 'Положение', kind: 'enum', opts: [['MO', 'Подвижна'], ['SP', 'На спине']], alert: v => v === 'SP', thr: 'SP' },
-  fhr:   { label: 'Базальная ЧСС', kind: 'num', min: 50, max: 230, presets: range(100, 180, 5), alert: v => v < 110 || v >= 160, thr: '<110, ≥160' },
-  decel: { label: 'Децелерации', kind: 'enum', opts: [['N', 'Нет'], ['E', 'Ранние'], ['L', 'Поздние'], ['V', 'Вариабельные']], alert: v => v === 'L', thr: 'L' },
-  af:    { label: 'Околоплодные воды', kind: 'enum', opts: [['I', 'Пузырь цел'], ['C', 'Светлые'], ['M+', 'Меконий +'], ['M++', 'Меконий ++'], ['M+++', 'Меконий +++'], ['B', 'С кровью']], alert: v => v === 'M+++' || v === 'B', thr: 'M+++, B' },
-  pos:   { label: 'Позиция плода', kind: 'enum', opts: [['A', 'Передний вид'], ['P', 'Задний вид'], ['T', 'Поперечное']], alert: v => v === 'P' || v === 'T', thr: 'P, T' },
-  caput: { label: 'Родовая опухоль', kind: 'enum', opts: PLUS, alert: v => v === '+++', thr: '+++' },
-  mould: { label: 'Конфигурация', kind: 'enum', opts: PLUS, alert: v => v === '+++', thr: '+++' },
-  pulse: { label: 'Пульс', kind: 'num', min: 30, max: 200, presets: range(60, 130, 5), alert: v => v < 60 || v >= 120, thr: '<60, ≥120' },
-  sys:   { label: 'САД', kind: 'num', min: 50, max: 260, presets: range(80, 170, 5), alert: v => v < 80 || v >= 140, thr: '<80, ≥140' },
-  dia:   { label: 'ДАД', kind: 'num', min: 20, max: 170, presets: range(50, 110, 5), alert: v => v >= 90, thr: '≥90' },
-  temp:  { label: 'Температура, °C', kind: 'num', min: 33, max: 42, presets: range(35.8, 38.6, 0.1), alert: v => v < 35 || v >= 37.5, thr: '<35,0, ≥37,5' },
-  prot:  { label: 'Моча: белок', kind: 'enum', opts: URINE, alert: v => v === '++' || v === '+++', thr: 'P++' },
-  acet:  { label: 'Моча: ацетон', kind: 'enum', opts: URINE, alert: v => v === '++' || v === '+++', thr: 'A++' },
-  cfreq: { label: 'Схватки за 10 мин', kind: 'num', min: 0, max: 10, presets: range(0, 7, 1), alert: v => v <= 2 || v > 5, thr: '≤2, >5' },
-  cdur:  { label: 'Длительность схваток, с', kind: 'num', min: 0, max: 180, presets: range(15, 90, 5), alert: v => v < 20 || v > 60, thr: '<20, >60' },
-  dil:   { label: 'Шейка матки, см (✕)', kind: 'grid', grid: [10, 9, 8, 7, 6, 5], thr: 'застой' },
-  desc:  { label: 'Опускание, пятые (○)', kind: 'grid', grid: [5, 4, 3, 2, 1, 0] },
-  oxyU:  { label: 'Окситоцин, ЕД/л', kind: 'num', min: 0, max: 40, presets: [2.5, 5, 10, 20] },
-  oxyD:  { label: 'Окситоцин, кап/мин', kind: 'num', min: 0, max: 80, presets: range(4, 40, 4) },
-  med:   { label: 'Препараты', kind: 'text' },
-  iv:    { label: 'Инфузия', kind: 'text' },
-  assess: { label: 'Оценка', kind: 'text' },
-  plan:  { label: 'План', kind: 'text' },
+  comp:    { label: 'Сопровождающее лицо', kind: 'enum', opts: YN, alert: v => v === 'Нет', thr: 'Нет' },
+  pain:    { label: 'Обезболивание', kind: 'enum', opts: YN, alert: v => v === 'Нет', thr: 'Нет' },
+  fluid:   { label: 'Пероральное введение жидкости', kind: 'enum', opts: YN, alert: v => v === 'Нет', thr: 'Нет' },
+  posture: { label: 'Положение', kind: 'enum', opts: [['Спина', 'на спине'], ['Подв.', 'подвижна']], alert: v => v === 'Спина', thr: 'Спина' },
+  fhr:     { label: 'Базальная ЧСС плода', kind: 'num', min: 50, max: 230, presets: range(100, 180, 5), alert: v => v < 110 || v >= 160, thr: '<110, ≥160' },
+  decel:   { label: 'Децелерация ЧСС', kind: 'enum', opts: [['Нет', 'нет'], ['Ран', 'ранние'], ['Поз', 'поздние'], ['Вар', 'вариабельные']], alert: v => v === 'Поз', thr: 'Поз' },
+  af:      { label: 'Амниотическая жидкость', kind: 'enum', opts: [['Ц', 'пузырь цел'], ['С', 'светлые'], ['М+', 'меконий +'], ['М++', 'меконий ++'], ['М+++', 'меконий +++'], ['К', 'кровь']], alert: v => v === 'М+++' || v === 'К', thr: 'М+++, К' },
+  pos:     { label: 'Внутриутробное расположение плода', kind: 'enum', opts: [['A', 'передний вид'], ['P', 'задний вид'], ['T', 'поперечное']], alert: v => v === 'P' || v === 'T', thr: 'P, T' },
+  caput:   { label: 'Родовая опухоль', kind: 'enum', opts: PLUS, alert: v => v === '+++', thr: '+++' },
+  mould:   { label: 'Конфигурация головки', kind: 'enum', opts: PLUS, alert: v => v === '+++', thr: '+++' },
+  pulse:   { label: 'Пульс', kind: 'num', min: 30, max: 200, presets: range(60, 130, 5), alert: v => v < 60 || v >= 120, thr: '<60, ≥120' },
+  sys:     { label: 'Систолическое АД', kind: 'num', min: 50, max: 260, presets: range(80, 170, 5), alert: v => v < 80 || v >= 140, thr: '<80, ≥140' },
+  dia:     { label: 'Диастолическое АД', kind: 'num', min: 20, max: 170, presets: range(50, 110, 5), alert: v => v >= 90, thr: '≥90' },
+  temp:    { label: 'Температура °С', kind: 'num', min: 33, max: 42, presets: range(35.8, 38.6, 0.1), alert: v => v < 35 || v >= 37.5, thr: '<35,0, ≥37,5' },
+  urine:   { label: 'Моча', kind: 'enum', opts: [['N', 'норма'], ['Б+', 'белок +'], ['Б++', 'белок ++'], ['К', 'К'], ['Ан', 'Ан']], alert: v => v === 'К' || v === 'Ан' || v === 'Б++', thr: 'К, Ан' },
+  cfreq:   { label: 'Частота схваток в течение 10 мин', kind: 'num', min: 0, max: 10, presets: range(0, 7, 1), alert: v => v <= 2 || v > 5, thr: '≤2, >5' },
+  cdur:    { label: 'Продолжительность схваток', kind: 'num', min: 0, max: 180, presets: range(15, 90, 5), alert: v => v < 20 || v > 60, thr: '<20, >60' },
+  dil:     { label: 'Раскрытие шейки матки [График X]', kind: 'grid', grid: [10, 9, 8, 7, 6, 5], gridThr: { 9: '≥2ч', 8: '≥2.5ч', 7: '≥3ч', 6: '≥5ч', 5: '≥6ч' } },
+  desc:    { label: 'Продвижение плода [График O]', kind: 'grid', grid: [5, 4, 3, 2, 1, 0] },
+  push:    { label: 'Начало потуг', kind: 'mark' },
+  oxy:     { label: 'Окситоцин (мл/ч)', kind: 'num', min: 0, max: 200, presets: [3, 6, 9, 12, 15, 18, 21, 24, 30, 36] },
+  med:     { label: 'Препараты', kind: 'text' },
+  iv:      { label: 'Внутривенные инфузии', kind: 'text' },
+  plan:    { label: 'План', kind: 'text' },
+  init:    { label: 'Инициалы', kind: 'text' },
 };
 
-// Шаг строки: I период — 'half' (каждые 30 мин) или 'hour'; II период — 'q' (15 мин) или 'five' (5 мин).
-export const STAGE1 = [
-  ['Уход', [['comp', 'hour'], ['pain', 'hour'], ['fluid', 'hour'], ['posture', 'hour']]],
-  ['Ребёнок', [['fhr', 'half'], ['decel', 'half'], ['af', 'hour'], ['pos', 'hour'], ['caput', 'hour'], ['mould', 'hour']]],
-  ['Женщина', [['pulse', 'hour'], ['sys', 'hour'], ['dia', 'hour'], ['temp', 'hour'], ['prot', 'hour'], ['acet', 'hour']]],
-  ['Течение родов', [['cfreq', 'half'], ['cdur', 'half'], ['dil', 'hour'], ['desc', 'hour']]],
-  ['Препараты', [['oxyU', 'hour'], ['oxyD', 'hour'], ['med', 'hour'], ['iv', 'hour']]],
-  ['Решение', [['assess', 'hour'], ['plan', 'hour']]],
-];
-export const STAGE2 = [
-  ['Ребёнок', [['fhr', 'five'], ['decel', 'five']]],
-  ['Течение родов', [['cfreq', 'q'], ['cdur', 'q']]],
-  ['Женщина', [['pulse', 'q'], ['sys', 'q'], ['dia', 'q']]],
-  ['Решение', [['assess', 'q'], ['plan', 'q']]],
-];
-
-// Сетка: I период — 12 ч × 2 полчаса = 24 единицы; II период — 3 ч × 12 пятиминуток = 36 единиц.
-export const UNITS = { 1: 24, 2: 36 };
-export const SPAN = { half: 1, hour: 2, five: 1, q: 3 };
-export const UNIT_MIN = { 1: 30, 2: 5 };
+// Сетка: I период — 12 ч по 30 мин (24 единицы); II период — 3 ч по 15 мин (12 единиц).
+export const UNITS = { 1: 24, 2: 12 };
+export const UNIT_MIN = { 1: 30, 2: 15 };
+// Ширина клетки в единицах. I: half=30 мин, hour=1 ч, two=2 ч. II: q=15 мин, h30=30 мин, h60=1 ч.
+export const SPAN = { half: 1, hour: 2, two: 4, q: 1, h30: 2, h60: 4 };
 export const cellsIn = (stage, step) => UNITS[stage] / SPAN[step];
 
-// Застой раскрытия LCG, часы на одном сантиметре.
+// [секция, [[ключ, шаг I периода, шаг II периода]]] — как на бланке.
+export const ROWS = [
+  ['Поддерживающий уход', [['comp', 'hour', 'h60'], ['pain', 'hour', 'h60'], ['fluid', 'hour', 'h60'], ['posture', 'hour', 'h60']]],
+  ['Плод', [['fhr', 'half', 'q'], ['decel', 'half', 'q'], ['af', 'hour', 'h60'], ['pos', 'hour', 'h60'], ['caput', 'hour', 'h60'], ['mould', 'hour', 'h60']]],
+  ['Роженица', [['pulse', 'hour', 'h30'], ['sys', 'hour', 'h30'], ['dia', 'hour', 'h30'], ['temp', 'hour', 'h30'], ['urine', 'hour', 'h30']]],
+  ['Ход родов', [['cfreq', 'half', 'q'], ['cdur', 'half', 'q'], ['dil', 'hour', null], ['desc', 'hour', 'h30']]],
+  ['Медикаменты', [['oxy', 'hour', 'h60'], ['med', 'hour', 'h60'], ['iv', 'hour', 'h60']]],
+];
+export const ROWS_PLAN = [
+  ['Совместное принятие решений', [['plan', 'two', 'h60']]],
+  ['', [['init', 'hour', 'h60']]],
+];
+
+// Застой раскрытия, часы на одном сантиметре (колонка бланка).
 export const LAG_H = { 5: 6, 6: 5, 7: 3, 8: 2.5, 9: 2 };
 
-export const PLAN_CHIPS = ['Сообщено старшему врачу', 'Смена положения', 'КТГ', 'Инфузия', 'Амниотомия', 'Обезболивание', 'Окситоцин', 'Наблюдение', 'Повторная оценка через 1 ч'];
+export const PLAN_CHIPS = ['Наблюдение', 'Сообщено старшему врачу', 'Смена положения', 'КТГ', 'Инфузия', 'Амниотомия', 'Обезболивание', 'Окситоцин', 'Повторный осмотр через 1 ч'];
 
 export const hasVal = v => v !== undefined && v !== null && v !== '';
 
@@ -71,7 +67,6 @@ export function isAlert(k, v) {
 
 export function fmt(v) { return hasVal(v) ? String(v).replace('.', ',') : ''; }
 
-// Часы, в которые X стоит на том же сантиметре дольше порога.
 export function lagAlerts(cells) {
   const out = new Set();
   let first = null, cur = null;
