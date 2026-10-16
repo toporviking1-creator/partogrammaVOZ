@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Партограмма ВОЗ</title>
+<meta name="description" content="Электронная партограмма ВОЗ (Labour Care Guide) для родзала: таймеры наблюдений, пороги, застой раскрытия, печать бланка. Работает офлайн, данные остаются на устройстве.">
+<meta name="theme-color" content="#E6EEEB" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#06110E" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Партограмма">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<header id="top"></header>
+<main id="view"><p class="empty">Загрузка…</p></main>
+<div id="sheet-backdrop" hidden></div>
+<section id="sheet" role="dialog" aria-modal="true" hidden></section>
+<div id="toast" role="status" aria-live="polite"></div>
+<noscript><p class="empty">Для работы нужен включённый JavaScript.</p></noscript>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
