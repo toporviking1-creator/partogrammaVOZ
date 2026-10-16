@@ -180,6 +180,22 @@ function scrollToLast(b) {
   });
 }
 
+// 10 см в сетке шейки = начало II периода: колонка с 10 см переносится в начало II периода.
+// Открывается автоматически; если II период открыт вручную или время правили руками — не трогаем.
+function syncS2(b) {
+  let h = -1;
+  for (let i = 0; i < 12; i++) if (Number(b.cells[`1:dil:${i}`]) === 10) { h = i; break; }
+  const has2 = Object.keys(b.cells).some(x => x.startsWith('2:'));
+  if (h >= 0) {
+    const t = b.start + h * 60 * MIN;
+    if (!b.s2start) { b.s2start = t; b.s2auto = true; return 'opened'; }
+    if (b.s2auto && b.s2start !== t) { b.s2start = t; return 'moved'; }
+    return null;
+  }
+  if (b.s2auto && b.s2start && !has2) { b.s2start = null; b.s2auto = false; return 'closed'; }
+  return null;
+}
+
 // ---------- выбор значения ----------
 function openPick(bid, stage, k, step, idx) {
   pick = { bid, stage: Number(stage), k, step, idx: Number(idx) };
@@ -265,7 +281,12 @@ document.addEventListener('click', async e => {
     const b = blank(route().id); const [k, i, cm] = g.dataset.grid.split(':');
     const key = `1:${k}:${i}`;
     if (Number(b.cells[key]) === Number(cm)) delete b.cells[key]; else b.cells[key] = Number(cm);
+    const s2 = k === 'dil' ? syncS2(b) : null;
     save(); renderBlank(b);
+    if (s2 === 'opened' || s2 === 'moved') {
+      toast(`II период открыт с ${hm(b.s2start)}`);
+      setTimeout(() => document.querySelector('.s2h')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 350);
+    } else if (s2 === 'closed') toast('II период снят');
     try { navigator.vibrate && navigator.vibrate(8); } catch (e2) {}
     return;
   }
@@ -288,7 +309,7 @@ document.addEventListener('click', async e => {
     }
     case 'addtxt': { const ta = $('#txt'); ta.value = ta.value.trim() ? ta.value.trim() + '; ' + a.dataset.t : a.dataset.t; break; }
     case 'savetxt': setCell($('#txt').value.trim(), false); closePick(); break;
-    case 's2': { const d = new Date(); d.setSeconds(0, 0); b.s2start = d.getTime(); save(); renderBlank(b); toast('II период открыт'); break; }
+    case 's2': { const d = new Date(); d.setSeconds(0, 0); b.s2start = d.getTime(); b.s2auto = false; save(); renderBlank(b); toast('II период открыт'); break; }
     case 'print': closePick(); window.print(); break;
     case 'share': {
       const name = `partogramma-${(b.label || 'blank').replace(/[^\wа-яё-]+/gi, '_')}.json`;
@@ -319,6 +340,9 @@ document.addEventListener('change', async e => {
     b[f] = t.type === 'datetime-local' ? (fromLocal(t.value) || (f === 'start' ? b.start : null)) : t.value.trim();
     save();
     if (f === 'label') topEl.querySelector('h1').textContent = b.label || 'Без метки';
+    if (f === 's2start') b.s2auto = false;
+    if (f === 'start') syncS2(b);
+    save();
     if (f === 'start' || f === 's2start') renderBlank(b);
   }
   if (t.dataset.file === 'import' && t.files[0]) {
