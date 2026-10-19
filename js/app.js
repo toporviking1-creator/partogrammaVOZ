@@ -183,6 +183,56 @@ function birthBlock(b) {
     </section>`;
 }
 
+// ---------- оборот: лист наблюдения акушерки после родов ----------
+const BACK_ROWS = [
+  ['Жалобы', [['Есть', 'r'], ['Нет', 'g']]],
+  ['Неврологический ответ (реакция только на….)', [['боль или нет реакции', 'r'], ['громкий голос', 'y'], ['обычный голос', 'g']]],
+  ['Температура', [['≥38', 'r'], ['37.5 - 37.9', 'y'], ['36 - 37.4', 'g'], ['35 - 35.9', 'y'], ['<35', 'r']]],
+  ['Пульс', [['≥120', 'r'], ['100 - 119', 'y'], ['51 - 99', 'g'], ['40-50', 'y'], ['<40', 'r']]],
+  ['Систолическое АД', [['≥160', 'r'], ['140 - 159', 'y'], ['100 - 139', 'g'], ['90 -99', 'y'], ['<90', 'r']]],
+  ['Диастолическое АД', [['≥110', 'r'], ['90 - 109', 'y'], ['50 - 89', 'g'], ['<50', 'r']]],
+  ['Тонус матки', [['Расслабляется', 'r'], ['Плотная', 'g']]],
+  ['Выделения (объем)', [['Обильные, алые', 'r'], ['Нормальный', 'g']]],
+];
+const BACK_COLS = ['15 мин', '30 мин', '45 мин', '1 час', '1 ч 15', '1 ч 30', '1 ч 45', '2 часа'];
+
+function backSide(b) {
+  const k = (b.birth && b.birth.kids && b.birth.kids[0]) || {};
+  const bd = k.date ? k.date.split('-').reverse().join('.') : '';
+  let birthT = null;
+  if (k.date && k.time) birthT = new Date(`${k.date}T${k.time}`).getTime();
+  const cur = BACK_COLS.map((_, i) => birthT ? hm(birthT + (i + 1) * 15 * MIN) : '');
+  const empty8 = cls => BACK_COLS.map(() => `<td class="${cls}"></td>`).join('');
+  let rows = '';
+  for (const [name, subs] of BACK_ROWS) {
+    subs.forEach(([sub, c], i) => {
+      rows += `<tr>${i === 0 ? `<th class="bk-name" rowspan="${subs.length}">${esc(name)}</th>` : ''}<th class="bk-sub">${esc(sub)}</th>${empty8('bk-' + c)}</tr>`;
+    });
+  }
+  return `
+  <section class="pr-only pr-back">
+    <div class="bk-line"><b>Ф.И.О.</b><u>${esc(b.fio)}</u><b>дата рождения</b><u class="sh"></u><b>палата №</b><u class="xs"></u></div>
+    <table class="bk">
+      <colgroup><col class="bk-c1"><col class="bk-c2">${BACK_COLS.map(() => '<col>').join('')}</colgroup>
+      <tr><th colspan="2" class="bk-dt"><div><b>Дата родов:</b> <u>${esc(bd)}</u></div><div><b>Время родов:</b> <u>${esc(k.time || '')}</u></div></th>
+        <th colspan="8" class="bk-note">Только зеленые - рутинное наблюдение. 1 желтый - переоценка через 30 минут, если сохраняется, уведомить доктора.<br>2 желтых или 1 красный или более - немедленный вызов доктора.</th></tr>
+      <tr><th colspan="2" class="bk-h">Время с момента родов</th>${BACK_COLS.map(x => `<th class="bk-h">${x}</th>`).join('')}</tr>
+      <tr><th colspan="2" class="bk-h">Текущее время</th>${cur.map(x => `<td class="bk-t">${x}</td>`).join('')}</tr>
+      ${rows}
+      <tr><th colspan="2" class="bk-h">Подпись</th>${empty8('')}</tr>
+    </table>
+    <h3 class="bl-h">Подсчет кровопотери</h3>
+    <p class="bl-p">Марлевые шарики: посчитано до <u class="xs"></u> посчитано после <u class="xs"></u></p>
+    <table class="bl">
+      <tr><th></th><th>Вес</th><th>Кол-во использованных</th><th>Вес без вычета</th><th>Вес с вычетом</th></tr>
+      <tr><td>Марлевые шарики</td><td>5 гр</td><td></td><td></td><td></td></tr>
+      <tr><td>Впитывающая пеленка</td><td>50 гр.</td><td></td><td></td><td></td></tr>
+      <tr><td>Мерная кружка</td><td>-</td><td>-</td><td>-</td><td></td></tr>
+    </table>
+    <p class="bl-p bl-sign">Общая кровопотеря <u class="md"></u> Подпись акушерки <u class="md"></u></p>
+  </section>`;
+}
+
 // ---------- экран бланка ----------
 function renderBlank(b) {
   topEl.innerHTML = `<a class="iconbtn" href="#/" aria-label="Все бланки">‹</a><h1>${esc(title(b))}</h1><button class="btn primary" data-act="print">Печать</button>`;
@@ -216,6 +266,7 @@ function renderBlank(b) {
       : `<button class="btn wide no-pr s2btn" data-act="s2">Полное раскрытие — открыть II период сейчас</button>`}
     ${birthBlock(b)}
     <div class="wrap" data-sync>${planTable(b)}</div>
+    ${backSide(b)}
     <div class="tools no-pr">
       <button class="btn" data-act="share">Передать файлом</button>
       <button class="btn danger" data-act="del">Удалить бланк</button>

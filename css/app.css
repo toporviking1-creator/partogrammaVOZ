@@ -199,4 +199,30 @@ tr.r-phrase .cell .txt { white-space: normal; font-size: 12px; line-height: 1.15
   .pr-birth p { margin: 2px 0 2px 10mm; font-size: 10px; }
   .kidtbl { width: 196mm; border-collapse: collapse; font-size: 9px; margin-bottom: 4px; }
   .kidtbl th, .kidtbl td { border: 1px solid #000; padding: 1px 3px; text-align: left; height: 12px; }
+
+  /* оборот — лист акушерки */
+  .pr-back { break-before: page; page-break-before: always; font-family: "Times New Roman", serif; padding: 2mm 10mm 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .bk-line { display: flex; align-items: baseline; gap: 4px; font-size: 13px; margin-bottom: 1mm; }
+  .bk-line u { flex: 1; text-decoration: none; border-bottom: 1px solid #000; min-height: 14px; font-weight: 700; font-family: Arial, sans-serif; font-size: 11px; }
+  .bk-line u.sh { flex: .45; } .bk-line u.xs { flex: .2; }
+  .bk { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 10px; }
+  .bk col.bk-c1 { width: 24mm; } .bk col.bk-c2 { width: 30mm; }
+  .bk th, .bk td { border: 1px solid #000; padding: 0 2px; height: 6.1mm; text-align: center; font-weight: 400; }
+  .bk .bk-sub { font-weight: 700; font-size: 10px; }
+  .bk .bk-name { font-size: 10px; }
+  .bk .bk-h { font-size: 10px; } .bk thead th, .bk tr:nth-child(2) th:not(:first-child) { font-weight: 700; }
+  .bk .bk-dt { text-align: left; font-size: 12px; padding: 1mm 2mm; }
+  .bk .bk-dt div { display: flex; gap: 4px; } .bk .bk-dt u { flex: 1; text-decoration: none; border-bottom: 1px solid #000; font-family: Arial, sans-serif; font-weight: 700; }
+  .bk .bk-note { font-size: 8.5px; line-height: 1.25; }
+  .bk td.bk-t { font: 700 10px Arial, sans-serif; }
+  .bk td.bk-r { background: #F7C9C9 !important; }
+  .bk td.bk-y { background: #F2F7A6 !important; }
+  .bk td.bk-g { background: #BFF5DD !important; }
+  .bl-h { font-size: 14px; margin: 5mm 0 0; }
+  .bl-p { font-size: 13px; margin: 1mm 0 3mm; display: flex; gap: 4px; align-items: baseline; }
+  .bl-p u { text-decoration: none; border-bottom: 1px solid #000; width: 22mm; display: inline-block; }
+  .bl-p u.md { width: 50mm; }
+  .bl { border-collapse: collapse; font-size: 13px; width: 160mm; }
+  .bl th, .bl td { border: 1px solid #000; padding: 1mm 2mm; text-align: left; font-weight: 400; height: 9mm; vertical-align: top; }
+  .bl-sign { margin-top: 4mm; }
 }
