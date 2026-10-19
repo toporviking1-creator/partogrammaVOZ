@@ -1,5 +1,5 @@
 // Офлайн: оболочка приложения кэшируется, обновления подтягиваются в фоне.
-const VERSION = 'pvoz-v5';
+const VERSION = 'pvoz-v6';
 const ASSETS = [
   './', 'index.html', 'css/app.css', 'js/app.js', 'js/rules.js', 'js/store.js',
   'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-maskable-512.png',

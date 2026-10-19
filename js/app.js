@@ -67,7 +67,7 @@ function cellLabel(b, stage, step, idx) {
 
 function cellHTML(k, v, ring = false) {
   if (!hasVal(v)) return '';
-  const t = PARAMS[k].kind === 'text' ? `<span class="txt">${esc(v)}</span>` : esc(fmt(v));
+  const t = (PARAMS[k].kind === 'text' || PARAMS[k].kind === 'phrase') ? `<span class="txt">${esc(v)}</span>` : esc(fmt(v));
   return isAlert(k, v) || ring ? `<span class="ring">${t}</span>` : t;
 }
 
@@ -128,7 +128,7 @@ function bodyRows(b, defs) {
       const secTh = first ? `<th class="sec${sec ? '' : ' nosec'}" rowspan="${n}"><span>${sec}</span></th>` : '';
       first = false;
       if (P.kind === 'grid') { h += gridRows(b, k, secTh); continue; }
-      h += `<tr class="r-${k}">${secTh}<th class="lab"><span>${P.label}</span></th><td class="thr">${esc(P.thr || '')}</td>${rowCells(b, k, s1, s2)}</tr>`;
+      h += `<tr class="r-${k}${P.kind === 'phrase' ? ' r-phrase' : ''}">${secTh}<th class="lab"><span>${P.label}</span></th><td class="thr">${esc(P.thr || '')}</td>${rowCells(b, k, s1, s2)}</tr>`;
     }
   }
   return h;
@@ -299,6 +299,9 @@ function renderPick() {
       <div class="other"><input id="other" inputmode="decimal" placeholder="другое значение"><button class="btn" data-act="other">OK</button></div>`;
   } else if (P.kind === 'enum') {
     body = `<div class="chips">${P.opts.map(([c, l]) => `<button class="chip wide-chip ${isAlert(pick.k, c) ? 'al' : ''}" aria-pressed="${v === c}" data-v="${esc(c)}"><b>${esc(c)}</b>${c.toLowerCase() !== l.toLowerCase() ? ` ${esc(l)}` : ''}</button>`).join('')}</div>`;
+  } else if (P.kind === 'phrase') {
+    body = `<div class="chips">${P.phrases.map(x => `<button class="chip wide-chip phrase" aria-pressed="${v === x}" data-v="${esc(x)}">${esc(x)}</button>`).join('')}</div>
+      <textarea id="txt" rows="2" placeholder="или свой текст">${P.phrases.includes(v) ? '' : esc(v ?? '')}</textarea><button class="btn wide" data-act="savetxt">Записать свой текст</button>`;
   } else {
     const chips = pick.k === 'plan' ? PLAN_CHIPS : [];
     body = `${chips.length ? `<div class="chips small">${chips.map(x => `<button class="chip" data-act="addtxt" data-t="${esc(x)}">${esc(x)}</button>`).join('')}</div>` : ''}

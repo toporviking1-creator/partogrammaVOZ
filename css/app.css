@@ -74,35 +74,38 @@ h1, h2 { margin: 0; line-height: 1.2; }
 /* бланк */
 .wrap { overflow-x: auto; background: var(--paper); border: 2px solid var(--ink); border-radius: 8px; -webkit-overflow-scrolling: touch; }
 .wrap + .wrap, .birth + .wrap { margin-top: 12px; }
-.lcg { border-collapse: separate; border-spacing: 0; table-layout: fixed; font-size: 15px; width: calc(24px + 104px + 64px + 24 * 34px + 10px + 12 * 30px); }
-.lcg col.c-sec { width: 24px; } .lcg col.c-lab { width: 104px; } .lcg col.c-thr { width: 64px; }
-.lcg col.c-u1 { width: 34px; } .lcg col.c-gap { width: 10px; } .lcg col.c-u2 { width: 30px; }
+.lcg { border-collapse: separate; border-spacing: 0; table-layout: fixed; font-size: 17px; width: calc(28px + 128px + 70px + 24 * 40px + 10px + 12 * 34px); }
+.lcg col.c-sec { width: 28px; } .lcg col.c-lab { width: 128px; } .lcg col.c-thr { width: 70px; }
+.lcg col.c-u1 { width: 40px; } .lcg col.c-gap { width: 10px; } .lcg col.c-u2 { width: 34px; }
 .lcg th, .lcg td { border-right: 1px solid var(--grid-soft); border-bottom: 1px solid var(--grid-soft); padding: 0; background: var(--paper); }
 .lcg td.gap, .lcg th.gap { background: var(--bg); border-color: transparent; border-left: 2px solid var(--ink); border-right: 2px solid var(--ink); }
-.lcg thead th { font-weight: 800; font-size: 13px; height: 28px; }
+.lcg thead th { font-weight: 800; font-size: 15px; height: 30px; }
 .lcg thead th.tm { font-weight: 700; }
-.lcg thead th.hr { font-size: 12px; color: var(--ink-2); }
+.lcg thead th.hr { font-size: 14px; color: var(--ink-2); }
 .lcg tr.phase th { font-size: 12px; border-bottom: 2px solid var(--ink); }
-.lcg th.crit { font-size: 9px; line-height: 1.1; font-weight: 700; }
+.lcg th.crit { font-size: 11px; line-height: 1.1; font-weight: 700; }
 .lcg .c0, .lcg .sec, .lcg .lab { position: sticky; z-index: 2; }
 .lcg .c0 { left: 0; text-align: left; padding: 0 8px; z-index: 3; }
 .lcg .sec { left: 0; background: var(--sec); border-right: 1px solid var(--grid); }
-.lcg .sec span { writing-mode: vertical-rl; transform: rotate(180deg); display: block; margin: 0 auto; font-size: 12px; font-weight: 800; padding: 4px 0; }
+.lcg .sec span { writing-mode: vertical-rl; transform: rotate(180deg); display: block; margin: 0 auto; font-size: 14px; font-weight: 800; padding: 4px 0; }
 .lcg .sec.nosec { background: var(--paper); }
-.lcg .lab { left: 24px; text-align: left; padding: 2px 6px; font-weight: 700; font-size: 12px; line-height: 1.12; border-right: 2px solid var(--ink); hyphens: auto; }
-.lcg td.thr { text-align: center; font-size: 12px; font-weight: 700; color: var(--red); padding: 0 2px; line-height: 1.1; }
+.lcg .lab { left: 28px; text-align: left; padding: 2px 6px; font-weight: 700; font-size: 14px; line-height: 1.12; border-right: 2px solid var(--ink); hyphens: auto; }
+.lcg td.thr { text-align: center; font-size: 14px; font-weight: 700; color: var(--red); padding: 0 2px; line-height: 1.1; }
 .lcg td.gthr { color: var(--ink); text-align: left; padding-left: 6px; }
-.lcg td.gthr span { color: var(--red); font-size: 11px; }
+.lcg td.gthr span { color: var(--red); font-size: 13px; }
 .lcg tbody tr:has(.sec) td, .lcg tbody tr:has(.sec) th:not(.sec) { border-top: 2px solid var(--ink); }
 .lcg td.na { background: var(--off); }
-.lcg td.note2 { font-size: 11px; line-height: 1.2; padding: 4px 6px; color: var(--ink-2); vertical-align: middle; }
-.cell { width: 100%; height: 42px; border: 0; background: transparent; cursor: pointer; font-weight: 700; font-size: 15px; padding: 0 1px; overflow: hidden; white-space: nowrap; }
+.lcg td.note2 { font-size: 13px; line-height: 1.2; padding: 4px 6px; color: var(--ink-2); vertical-align: middle; }
+.cell { width: 100%; height: 46px; border: 0; background: transparent; cursor: pointer; font-weight: 700; font-size: 17px; padding: 0 1px; overflow: hidden; white-space: nowrap; }
 .cell.off { background: var(--off); cursor: not-allowed; }
 .cell:not(.off):hover { background: var(--sec); }
 .cell.cur { background: var(--cur); box-shadow: inset 0 0 0 3px var(--ink); }
-.cell.c2 { font-size: 13px; }
-.cell .txt { display: block; overflow: hidden; text-overflow: ellipsis; font-size: 12px; font-weight: 600; text-align: left; padding: 0 3px; }
-.grow .cell { height: 30px; font-size: 18px; }
+.cell.c2 { font-size: 15px; }
+.cell .txt { display: block; overflow: hidden; text-overflow: ellipsis; font-size: 14px; font-weight: 600; text-align: left; padding: 0 3px; }
+tr.r-phrase .cell { height: 64px; white-space: normal; }
+tr.r-phrase .cell .txt { white-space: normal; font-size: 12px; line-height: 1.15; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; }
+.chip.phrase { font-size: 17px; text-align: left; }
+.grow .cell { height: 32px; font-size: 20px; }
 .lcg.plan tr.r-plan .cell { height: 72px; white-space: normal; }
 .lcg.plan tr.r-plan .cell .txt { white-space: normal; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; }
 .ring { display: inline-block; padding: 0 3px; border: 2.5px solid var(--red); border-radius: 999px; color: var(--red); line-height: 1.2; }
@@ -168,25 +171,28 @@ h1, h2 { margin: 0; line-height: 1.2; }
   .wrap { overflow: visible; border: 0; border-radius: 0; background: #fff; }
   .wrap + .wrap, .birth + .wrap { margin-top: 0; }
   .lcg { width: 196mm; font-size: 8px; border-top: 1px solid #000; }
-  .lcg col.c-sec { width: 4mm; } .lcg col.c-lab { width: 20mm; } .lcg col.c-thr { width: 11mm; }
-  .lcg col.c-u1 { width: 5mm; } .lcg col.c-gap { width: 2mm; } .lcg col.c-u2 { width: 3.3mm; }
+  .lcg col.c-sec { width: 4.5mm; } .lcg col.c-lab { width: 24mm; } .lcg col.c-thr { width: 12mm; }
+  .lcg col.c-u1 { width: 4.8mm; } .lcg col.c-gap { width: 1.5mm; } .lcg col.c-u2 { width: 3.2mm; }
   .lcg th, .lcg td { position: static !important; border-color: #333; border-width: 0 1px 1px 0; }
   .lcg tr > :first-child { border-left: 1px solid #333; }
   .lcg td.gap, .lcg th.gap { border: 0 !important; background: #fff; }
-  .lcg thead th { height: 12px; font-size: 7px; font-weight: 400; }
+  .lcg thead th { height: 13px; font-size: 9px; font-weight: 400; }
   .lcg tr.phase th { font-size: 7px; border-bottom-width: .5px; }
-  .lcg th.crit { font-size: 5px; }
-  .lcg .lab { font-size: 6.5px; font-weight: 400; padding: 0 2px; border-right-width: .5px; }
-  .lcg td.thr { font-size: 7px; font-weight: 400; }
-  .lcg td.gthr span { font-size: 7px; }
-  .lcg .sec span { font-size: 6.5px; font-weight: 400; padding: 1px 0; }
+  .lcg th.crit { font-size: 6.5px; }
+  .lcg .lab { font-size: 8px; font-weight: 400; padding: 0 2px; border-right-width: .5px; }
+  .lcg td.thr { font-size: 8.5px; font-weight: 400; }
+  .lcg td.gthr span { font-size: 8.5px; }
+  .lcg .sec span { font-size: 8px; font-weight: 400; padding: 1px 0; }
   .lcg tbody tr:has(.sec) td, .lcg tbody tr:has(.sec) th:not(.sec) { border-top: 1px solid #000; }
-  .lcg td.note2 { font-size: 5.5px; padding: 1px; }
-  .cell, .cell.off { height: 16px; font-size: 7.5px; background: none; padding: 0; }
-  .cell.c2 { font-size: 5.6px; letter-spacing: -.2px; }
-  .grow .cell { height: 11px; font-size: 8px; line-height: 11px; }
-  .cell .txt { font-size: 6px; white-space: normal; line-height: 1.1; overflow: visible; padding: 0 1px; }
-  .lcg.plan tr.r-plan .cell { height: 26mm; vertical-align: top; }
+  .lcg td.note2 { font-size: 6.5px; padding: 1px; }
+  .cell, .cell.off { height: 17px; font-size: 10px; background: none; padding: 0; }
+  .cell.c2 { font-size: 6.8px; letter-spacing: -.3px; }
+  .cell[data-cell*=":half:"] { font-size: 8px; letter-spacing: -.4px; }
+  .grow .cell { height: 12px; font-size: 10px; line-height: 12px; }
+  .cell .txt { font-size: 7.5px; white-space: normal; line-height: 1.1; overflow: visible; padding: 0 1px; }
+  .lcg.plan tr.r-plan .cell { height: 24mm; vertical-align: top; }
+  tr.r-phrase .cell { height: auto; min-height: 17px; }
+  tr.r-phrase .cell .txt { font-size: 6.5px; -webkit-line-clamp: unset; display: block; }
   .lcg.plan tr.r-plan .cell .txt { -webkit-line-clamp: unset; display: block; }
   .ring { border-width: 1px; padding: 0 1px; }
   .pr-birth { margin: 4px 0; }
